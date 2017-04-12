@@ -1,6 +1,9 @@
-﻿@model CheeseMVC.ViewModels.AddCheeseViewModel
+﻿@{
+    ViewBag.title = "Add Cheese";
+}
+@model CheeseMVC.ViewModels.AddCheeseViewModel
 
-<h1>Add Cheese</h1>
+<h1>@ViewBag.title</h1>
 
 <form asp-controller="Cheese" asp-action="Add" method="post">
 
