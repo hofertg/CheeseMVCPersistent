@@ -54,6 +54,22 @@ namespace CheeseMVC.Controllers
             return View(addMenuViewModel);
         }
 
+        public IActionResult Remove()
+        {
+            ViewBag.menus = context.Menus.ToList();
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Remove(int menuId)
+        {
+            Menu theMenu = context.Menus.Single(m => m.ID == menuId);
+            context.Menus.Remove(theMenu);
+            context.SaveChanges();
+
+            return Redirect("/Menu");
+        }
+
         public IActionResult ViewMenu(int id)
         {
             Menu menu = context.Menus.Single(m => m.ID == id);
@@ -111,20 +127,53 @@ namespace CheeseMVC.Controllers
             return View(addMenuItemViewModel);
         }
 
-        public IActionResult Remove()
+        public IActionResult RemoveItem(int id)
         {
-            ViewBag.menus = context.Menus.ToList();
-            return View();
+            Menu menu = context.Menus.Single(m => m.ID == id);
+
+            List<CheeseMenu> items = context
+                .CheeseMenus
+                .Include(item => item.Cheese)
+                .Where(cm => cm.MenuID == id)
+                .ToList();
+
+            RemoveMenuItemViewModel removeMenuItemViewModel = new RemoveMenuItemViewModel
+            {
+                Menu = menu,
+                Items = items
+            };
+
+            return View(removeMenuItemViewModel);
         }
 
         [HttpPost]
-        public IActionResult Remove(int menuId)
+        public IActionResult RemoveItem(int[] cheeseIds, int menuId)
         {
-            Menu theMenu = context.Menus.Single(m => m.ID == menuId);
-            context.Menus.Remove(theMenu);
+            foreach (int cheeseId in cheeseIds)
+            {
+                /* ???? See if it can be done simpler than below, but this does not function as is
+                CheeseMenu theCheeseMenu = context.CheeseMenus.Single(cm => cm.CheeseID == cheeseId & cm.MenuID == menuId);
+                context.CheeseMenus.Remove(theCheeseMenu);
+                */
+
+                
+                List<CheeseMenu> cheeseMenus = context.CheeseMenus
+                    .Where(cm => cm.CheeseID == cheeseId)
+                    .Where(cm => cm.MenuID == menuId)
+                    .ToList();
+                if (cheeseMenus.Count != 0)
+                {
+                    CheeseMenu theCheeseMenu = cheeseMenus[0];
+                    context.CheeseMenus.Remove(theCheeseMenu);
+                }
+                
+
+            }
+
             context.SaveChanges();
 
-            return Redirect("/Menu");
+            return Redirect($"/Menu/ViewMenu/{menuId}");
         }
+    
     }
 }

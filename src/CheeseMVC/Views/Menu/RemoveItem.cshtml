@@ -1,0 +1,18 @@
+﻿@model CheeseMVC.ViewModels.RemoveMenuItemViewModel
+@{
+    ViewBag.title = "Remove Cheeses from Menu:" + Model.Menu.Name;
+}
+
+<h1>@ViewBag.title</h1>
+
+<form method="post">
+
+    @foreach (var cheese in Model.Items)
+    {
+        <input type="checkbox" name="cheeseIds" id="@cheese.CheeseID" value="@cheese.CheeseID" />
+        <label for="@cheese.CheeseID">@cheese.Cheese.Name</label>
+        <br />
+    }
+    <input type="hidden" name="menuId" value="@Model.Menu.ID" />
+    <input type="submit" value="Remove Selected Cheese(s)" />
+</form>
