@@ -151,21 +151,10 @@ namespace CheeseMVC.Controllers
         {
             foreach (int cheeseId in cheeseIds)
             {
-                /* ???? See if it can be done simpler than below, but this does not function as is
-                CheeseMenu theCheeseMenu = context.CheeseMenus.Single(cm => cm.CheeseID == cheeseId & cm.MenuID == menuId);
-                context.CheeseMenus.Remove(theCheeseMenu);
-                */
-
                 
-                List<CheeseMenu> cheeseMenus = context.CheeseMenus
-                    .Where(cm => cm.CheeseID == cheeseId)
-                    .Where(cm => cm.MenuID == menuId)
-                    .ToList();
-                if (cheeseMenus.Count != 0)
-                {
-                    CheeseMenu theCheeseMenu = cheeseMenus[0];
-                    context.CheeseMenus.Remove(theCheeseMenu);
-                }
+                CheeseMenu theCheeseMenu = context.CheeseMenus
+                    .Where(cm => cm.MenuID == menuId).Single(cm => cm.CheeseID == cheeseId);
+                context.CheeseMenus.Remove(theCheeseMenu);
                 
 
             }
