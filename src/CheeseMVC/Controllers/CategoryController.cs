@@ -28,6 +28,21 @@ namespace CheeseMVC.Controllers
             return View(categories);
         }
 
+        public IActionResult ViewCategory(int id)
+        {
+            CheeseCategory category = context.Categories.Single(c => c.ID == id);
+            List<Cheese> cheeses = context.Cheeses.Where(c => c.CategoryID == id).ToList();
+            
+
+            ViewCategoryViewModel viewCategoryViewModel = new ViewCategoryViewModel
+            {
+                Category = category,
+                Cheeses = cheeses
+            };
+
+            return View(viewCategoryViewModel);
+        }
+
         public IActionResult Add()
         {
             AddCategoryViewModel addCategoryViewModel = new AddCategoryViewModel();

@@ -1,0 +1,25 @@
+﻿@model CheeseMVC.ViewModels.ViewCategoryViewModel
+
+@{
+    ViewBag.title = Model.Category.Name;
+}
+
+<h1>@ViewBag.title</h1>
+
+@if (Model.Cheeses.Count == 0)
+{
+    <p>No cheeses yet!</p>
+}
+else
+{
+    <ul>
+        @foreach (var cheese in Model.Cheeses)
+        {
+            <li>@cheese.Name</li>
+        }
+    </ul>
+}
+
+
+
+
