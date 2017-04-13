@@ -1,7 +1,7 @@
-﻿@{
-    ViewBag.title = "Add Cheese";
+﻿@model CheeseMVC.ViewModels.AddCheeseViewModel
+@{
+    ViewBag.title = @Model.Title.ToString() + " Cheese";
 }
-@model CheeseMVC.ViewModels.AddCheeseViewModel
 
 <h1>@ViewBag.title</h1>
 
@@ -12,7 +12,7 @@
 }
 else
 {
-    <form asp-controller="Cheese" asp-action="Add" method="post">
+    <form asp-controller="Cheese" asp-action="@Model.Title.ToString()" method="post">
 
         <div class="form-group">
             <label asp-for="Name"></label>
@@ -29,8 +29,9 @@ else
             <label asp-for="CategoryID"></label>
             <select asp-for="CategoryID" asp-items="Model.Categories"></select>
         </div>
-        
-        <input type="submit" value="Add Cheese" />
+        <input type="hidden" asp-for="CheeseId" />
+        <input type="hidden" asp-for="Title" />
+        <input type="submit" value="@Model.Title.ToString() Cheese" />
 
     </form>
 
