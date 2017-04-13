@@ -5,24 +5,35 @@
 
 <h1>@ViewBag.title</h1>
 
-<form asp-controller="Cheese" asp-action="Add" method="post">
+@if (Model.Categories.Count == 0)
+{
+    <h4>Categories must be added before cheeses!</h4>
+    <p><a asp-controller="Category" asp-action="Add">Add Category</a></p>
+}
+else
+{
+    <form asp-controller="Cheese" asp-action="Add" method="post">
 
-    <div class="form-group">
-        <label asp-for="Name"></label>
-        <input class="form-control" asp-for="Name" />
-        <span asp-validation-for="Name"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Description"></label>
-        <input class="form-control" asp-for="Description" />
-        <span asp-validation-for="Description"></span>
-    </div>
+        <div class="form-group">
+            <label asp-for="Name"></label>
+            <input class="form-control" asp-for="Name" />
+            <span asp-validation-for="Name"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Description"></label>
+            <input class="form-control" asp-for="Description" />
+            <span asp-validation-for="Description"></span>
+        </div>
 
-    <div class="form-group">
-        <label asp-for="CategoryID"></label>
-        <select asp-for="CategoryID" asp-items="Model.Categories"></select>
-    </div>
+        <div class="form-group">
+            <label asp-for="CategoryID"></label>
+            <select asp-for="CategoryID" asp-items="Model.Categories"></select>
+        </div>
+        
+        <input type="submit" value="Add Cheese" />
 
-    <input type="submit" value="Add Cheese" />
+    </form>
 
-</form>
+}
+
+

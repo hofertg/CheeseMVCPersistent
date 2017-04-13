@@ -1,0 +1,18 @@
+﻿@{
+    ViewBag.title = "Remove Category";
+}
+
+<h1>@ViewBag.title</h1>
+
+<h3>Warning: Removing category also removes cheeses in that category!</h3>
+<form method="post">
+
+    @foreach (var category in ViewBag.categories)
+    {
+        <input type="radio" name="categoryId" id="@category.ID" value="@category.ID" />
+        <label for="@category.ID">@category.Name</label>
+        <br />
+    }
+
+    <input type="submit" value="Remove Selected Category" />
+</form>

@@ -27,6 +27,12 @@ namespace CheeseMVC.ViewModels
 
         public AddCheeseViewModel(IEnumerable<CheeseCategory> categories) {
 
+            AddCategories(categories);
+           
+        }
+
+        public void AddCategories(IEnumerable<CheeseCategory> categories)
+        {
             Categories = new List<SelectListItem>();
 
             foreach (CheeseCategory category in categories)
@@ -37,8 +43,6 @@ namespace CheeseMVC.ViewModels
                     Text = category.Name
                 });
             }
-            
-
         }
     }
 }
